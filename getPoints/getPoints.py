@@ -73,6 +73,7 @@ try:
     arcpy.env.workspace = outPointsPath
     points = arcpy.ListFeatureClasses()
     for point in points:
+        #获取行数据
         rows = arcpy.UpdateCursor(point)
         # 删除第一行（重复的bug）
         for row in rows:

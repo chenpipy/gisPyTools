@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 import arcpy
 import os
+from dirUtil import listDirUtil
 
-workPath = r"C:\Users\chenpipy\Desktop\qinghai"
+# 给某一字段，增加自增长的值
+workPath = r"C:\Users\chenpipy\Desktop\xian"
 # Set local variables
 
 fieldName = "TMC"
@@ -15,15 +17,10 @@ def accumulate(increment):
     else:
         total=1
     return total"""
+# 获取所有的shp文件
+filePaths=listDirUtil.listFirstDirFiels(workPath,".shp")
+# 遍历
+for filePath in filePaths:
+    arcpy.CalculateField_management(filePath, fieldName, expression, "PYTHON_9.3", codeblock)
+    print (filePath+u"完成")
 
-
-def listFirseDir(workPath):
-    for filename in os.listdir(workPath):
-        filepath = os.path.join(workPath, filename).decode('gbk')
-        if os.path.isfile(filepath):
-            extension = os.path.splitext(filepath)[1]
-            if (extension == ".shp"):
-                arcpy.CalculateField_management(filepath, fieldName, expression, "PYTHON_9.3", codeblock)
-                print(filepath)
-
-listFirseDir(workPath)
